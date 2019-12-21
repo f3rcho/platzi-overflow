@@ -1,0 +1,25 @@
+{
+  "name": "platzi-overflow",
+  "version": "1.0.0",
+  "description": "un sitio como StackOverFlow",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon",
+    "lint": "standard",
+    "lint-fix": "standard --fix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "hapi"
+  ],
+  "author": "Fernando Cordero",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.2",
+    "standard": "^14.3.1"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^18.4.0"
+  }
+}
