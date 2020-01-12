@@ -4,7 +4,11 @@
   "description": "un sitio como StackOverFlow",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "dev": "nodemon --ext js,hbs",
+=======
+    "dev": "nodemon --ext js, hbs",
+>>>>>>> ed3be5eabcd9f3dc4afa0eb7133d7701c9a55de1
     "lint": "standard",
     "lint-fix": "standard --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
