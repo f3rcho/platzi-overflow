@@ -6,6 +6,7 @@ const handlerbars = require('handlebars') // para implementacion de plantillas
 const inert = require('inert') // extiende los metodos disponible en el objeto h
 const vision = require('@hapi/vision') //para implementar el uso de vistas. Hay que configurarlo por ser un plugin
 const path = require('path') // nos permite definir una ubicación relativa para todos los routes de nuestro proyecto
+const routes = require('./routes')
 
 // Configurar el servidor de nuestra aplicación. En un contenedor (Docker) si marca error colocar 0.0.0.0 (todos)
 const server = Hapi.server({
@@ -38,45 +39,7 @@ async function init() {
             layout: true, //indica que usaremos layouts
             layoutPath: 'views' //ubicacion de layouts
         })
-
-              // Definición de rutas (indicar el método HTTP, URL y controlador de ruta)
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: (req, h) => {
-            return h.view('index', {
-                title: 'home'
-            })
-        } 
-     })
-    server.route({
-        method: 'GET',
-        path: '/register',
-        handler: (req, h) => {
-            return h.view('register', {
-                title: 'Registro'
-            })
-        } 
-     })
-     
-     server.route({
-        method: 'POST',
-        path: '/create-user',
-        handler: (req, h) => {
-            console.log(req.payload)
-            return 'Usuario creado'
-        } 
-     })
-     server.route({
-         method: 'GET',
-         path: '/{param*}',
-         handler: {
-             directory: {
-                 path: '.',
-                 index: ['index.html']
-             }
-         }
-      })
+        server.route(routes)
         await server.start()
     } catch (error) {
         console.error(error)
