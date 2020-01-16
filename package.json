@@ -23,6 +23,8 @@
     "@hapi/hapi": "^18.4.0",
     "@hapi/joi": "^17.0.2",
     "@hapi/vision": "^6.0.0",
+    "bcrypt": "^3.0.7",
+    "firebase-admin": "^8.9.1",
     "handlebars": "^4.7.0",
     "inert": "^5.1.3"
   }
