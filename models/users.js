@@ -23,6 +23,21 @@ class Users {
 
         return newUser.key //almacenada en la propiedad key
     }
+// creando la funcion para validar el usuario
+    async validateUser (data) {
+// Ordenar la colección por email, consultar el usuario por su email (no me interesa escuchar cambios en la data, por ello once)
+        const userQuery = await this.collection.orderByChild('email').equalTo(data.email).once('value')
+        const userFound = userQuery.val() // extrae el valor como objeto
+        if (userFound) {
+            const userId = Object.keys(userFound)[0] //extrayendo la clave del objeto
+            const passwordRight = await bcrypt.compare(data.password, userFound[userId].password)//compara si las contrasenas son correctas{documentResultado.objectId.password}
+            //comprobando el resultado
+            const result = (passwordRight) ? userFound[userId] : false
+
+            return result
+        }
+        return false
+    }
 
    static async encrypt (password) {
         const saltRounds = 10
