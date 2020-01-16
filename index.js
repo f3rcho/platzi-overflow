@@ -29,6 +29,13 @@ async function init() {
         await server.register(inert)
         //registrando vision
         await server.register(vision)
+    //configurando el servidor para el envio de cookies con state para la autenticacion-cookies y estado
+        server.state('user', { //nombre la cookie (user)
+            ttl: 1000 * 60 * 60 * 24 * 7, //ttl de una semana
+            isSecure: process.env.NODE_ENV === 'prod',
+            encoding: 'base64json',
+        })
+
         //configuracion de vision
         server.views({
             engines: {  //hapi puede usar diferentes engines
@@ -49,6 +56,13 @@ async function init() {
 
     console.log(`Servidor lanzado en: ${server.info.uri}`)
 }
+//manejo de errores no controlados
+process.on('unhandledRejection', () => {
+    console.error('unhandledRejection', error.message, error);
+})
+process.on('unhandledException', () => {
+    console.error('unhandledException', error.message, error);
+})
 
 // Inicializar el proyecto
 init();

@@ -24,7 +24,8 @@ module.exports = [
                     name: joi.string().required().min(3),
                     email: joi.string().email().required(),
                     password: joi.string().required().min(6),
-                }
+                },
+                failAction: user.failValidation,
             }
         },
         handler: user.createUser
@@ -35,6 +36,11 @@ module.exports = [
         handler: site.login
     },
     {
+        method: 'GET',
+        path: '/logout',
+        handler: user.logout
+    },
+    {
         path: '/validate-user',
         method: 'POST',
         options: {
@@ -42,7 +48,9 @@ module.exports = [
                 payload: {
                     email: joi.string().email().required(),
                     password: joi.string().required().min(6),
-                }
+                },
+                //manejando error. cuando la validacion falla
+                failAction: user.failValidation,
             }
         },
         handler: user.validateUser
