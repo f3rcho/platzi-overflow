@@ -66,7 +66,7 @@ module.exports = [
         }
     },
     {
-        method: ['GET', 'POST'],
+        method: ['GET', 'POST'], // estos metodos aplican para esta ruta. Validacion de errores
         path: '/{any*}',
         handler: site.notFound,
     }

@@ -5,6 +5,7 @@ const Hapi = require('@hapi/hapi')
 const handlerbars = require('handlebars') // para implementacion de plantillas
 const inert = require('inert') // extiende los metodos disponible en el objeto h
 const vision = require('@hapi/vision') //para implementar el uso de vistas. Hay que configurarlo por ser un plugin
+const site = require('./controllers/site')
 const path = require('path') // nos permite definir una ubicación relativa para todos los routes de nuestro proyecto
 const routes = require('./routes')
 
@@ -46,6 +47,9 @@ async function init() {
             layout: true, //indica que usaremos layouts
             layoutPath: 'views' //ubicacion de layouts
         })
+        //registrando la interseccion del site del request
+        server.ext('onPreResponse', site.fileNotFound)
+        //iniciando el server
         server.route(routes)
         await server.start()
     } catch (error) {
@@ -57,10 +61,10 @@ async function init() {
     console.log(`Servidor lanzado en: ${server.info.uri}`)
 }
 //manejo de errores no controlados
-process.on('unhandledRejection', () => {
+process.on('unhandledRejection', error => {
     console.error('unhandledRejection', error.message, error);
 })
-process.on('unhandledException', () => {
+process.on('unhandledException', error => {
     console.error('unhandledException', error.message, error);
 })
 
