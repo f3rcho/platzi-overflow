@@ -1,6 +1,6 @@
 'use strict'
 
-class Question {
+class Questions {
     constructor (db) { //recibe la db
         this.db = db 
         this.ref = this.db.ref('/') //se crea una referencia
@@ -13,6 +13,11 @@ class Question {
 
         return question.key //firebase retorna un key por eso delvemos asi
     }
+    async getLast (amount) {
+        const query = await this.collection.limitToLast(amount).once('value')
+        const data = query.val()
+        return data
+    }
 }
 
-module.exports = Question
+module.exports = Questions
