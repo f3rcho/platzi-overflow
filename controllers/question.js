@@ -1,5 +1,5 @@
 'use strict'
-const questions = require('../models/index')
+const questions = require('../models/index').questions
 
 async function createQuestion {
     let result
