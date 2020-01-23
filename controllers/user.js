@@ -52,13 +52,16 @@ function failValidation (req, h, error) {
 //detectando de donde viene el error, con el obj templates    
     const templates = {
         '/create-user': 'register', //accion que se ejecuta en el registro
-        '/validate-user': 'login' // en el login
+        '/validate-user': 'login', // en el login
+        '/create-question': 'ask'
     }
     //retornamos la vista. req.path, accedo a la ruta de la que se esta mandando el error
+    console.error(error);
     return h.view(templates[req.path], {
         title: 'Error de validación',
         error: 'Favor complete los campos requeridos'
-    }).code(400).takeover()//finaliza el ciclo y responde de una vez
+        
+    }).code(400).takeover()//finaliza el ciclo y responde de una vez 
 }
 module.exports = {
     createUser: createUser,
