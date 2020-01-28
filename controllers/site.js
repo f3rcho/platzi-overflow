@@ -34,6 +34,25 @@ function login (req, h) {
         user: req.state.user
     })
 }
+//Visualizar una pregunta
+async function viewQuestion (req, h) {
+    let data
+    try {
+        // obteniendo parametros de la ruta
+        data = await questions.getOne(req.params.id)
+        if (!data) {
+            return notFound(req, h)
+        }
+    } catch (error) {
+        console.error(error);
+    }
+    return h.view('question', {
+        title: 'Detalles de la pregunta',
+        user: req.state.user,
+        question: data,
+        key: req.params.id //key es el id de la pregunta
+    })
+}
 
 function notFound (req, h) { //funcion que se lanzara al haber un 404
     return h.view('404', {}, {layout: 'error-layout'}).code(404)
@@ -63,4 +82,5 @@ module.exports = {
     fileNotFound: fileNotFound,
     notFound: notFound,
     register: register,
+    viewQuestion,
 }
