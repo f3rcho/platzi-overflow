@@ -18,6 +18,12 @@ class Questions {
         const data = query.val()
         return data
     }
+// recuperar una pregunta por id
+    async getOne (id) {
+        const query = await this.collection.child(id).once('value')
+        const data = query.val() 
+        return data
+    }
 }
 
 module.exports = Questions
