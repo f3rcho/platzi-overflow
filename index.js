@@ -2,18 +2,12 @@
 
 // Requerir el modulo de hapi (Framework)
 const Hapi = require('@hapi/hapi')
-const handlerbars = require('handlebars') // para implementacion de plantillas
+const handlerbars = require('./lib/helpers') // para implementacion de plantillas
 const inert = require('inert') // extiende los metodos disponible en el objeto h
 const vision = require('@hapi/vision') //para implementar el uso de vistas. Hay que configurarlo por ser un plugin
 const site = require('./controllers/site')
 const path = require('path') // nos permite definir una ubicación relativa para todos los routes de nuestro proyecto
 const routes = require('./routes')
-
-//numero de respuestas por preguntas
-handlerbars.registerHelper('answerNumber', (answers) => {
-    const keys = Object.keys(answers)
-    return keys.length
-})
 
 // Configurar el servidor de nuestra aplicación. En un contenedor (Docker) si marca error colocar 0.0.0.0 (todos)
 const server = Hapi.server({
