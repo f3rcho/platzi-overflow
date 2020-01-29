@@ -29,7 +29,24 @@ class Questions {
         const answers = await this.collection.child(data.id).child('answers').push()
         answers.set({text: data.answer, user: user}) //dandole valores a answer
         return answers
-
+    }
+// Creacion de l metodo estandar para el servidor
+    async setAnswerRight (questionId, answerId, user) {
+    //query al firebase
+        const query = await this.collection.child(questionId).once('value')
+        const question = query.val()
+        const answers = question.answer
+    //verificamos que el usuario es el dueno de la pregunta
+        if (user.email === question.owner.email) {
+            return false            
+        }
+    //proceso para responder
+        for (let key in answers) {
+            answers[key].correct = (key === answerId)
+        }
+//actualizamos la pregunta
+        const update = await this.collection.child(questionId).child('answers').update(answers)
+        return update
     }
 }
 
