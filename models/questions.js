@@ -11,7 +11,7 @@ class Questions {
         const question = this.collection.push() //guarda en la colection
         question.set(data) //se inserta
 
-        return question.key //firebase retorna un key por eso delvemos asi
+        return question.key //firebase retorna un key por eso devolvemos asi
     }
     async getLast (amount) {
         const query = await this.collection.limitToLast(amount).once('value')
@@ -23,6 +23,13 @@ class Questions {
         const query = await this.collection.child(id).once('value')
         const data = query.val() 
         return data
+    }
+// respondiendo, insertando una pregunta
+    async answer (data, user) { //data objeto del payload
+        const answers = await this.collection.child(data.id).child('answers').push()
+        answers.set({text: data.answer, user: user}) //dandole valores a answer
+        return answers
+
     }
 }
 

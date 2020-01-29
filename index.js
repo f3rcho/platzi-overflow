@@ -9,6 +9,12 @@ const site = require('./controllers/site')
 const path = require('path') // nos permite definir una ubicación relativa para todos los routes de nuestro proyecto
 const routes = require('./routes')
 
+//numero de respuestas por preguntas
+handlerbars.registerHelper('answerNumber', (answers) => {
+    const keys = Object.keys(answers)
+    return keys.length
+})
+
 // Configurar el servidor de nuestra aplicación. En un contenedor (Docker) si marca error colocar 0.0.0.0 (todos)
 const server = Hapi.server({
     port: process.env.PORT || 3000,

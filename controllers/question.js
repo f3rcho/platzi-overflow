@@ -14,9 +14,22 @@ async function createQuestion (req, h) {
             error: 'Problemas creando la pregunta'
         }).code(500).takeover()
         }
-    return h.response(`Pregunta creada con el ID ${result}`)
+    // return h.response(`Pregunta creada con el ID ${result}`)
+    console.log(req.payload)
+    return h.redirect('/')
 }
-
+//respondiendo una pregunta
+async function answerQuestion (req, h) {
+    let result
+    try {
+        result = await questions.answer(req.payload, req.state.user)
+        console.log(`Respuesta creada: ${result}`)
+    } catch (error) {
+        console.error(error);
+    }
+    return h.redirect(`/question/${req.payload.id}`) //redireccionando a la pregunta que se esta respondiendo
+}
 module.exports = {
-    createQuestion: createQuestion
+    createQuestion: createQuestion,
+    answerQuestion,
 }
