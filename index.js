@@ -33,7 +33,15 @@ async function init() {
         await server.register(vision)
         //registrando el metodo del servidor
         server.method('setAnswerRight', methods.setAnswerRight)
-    //configurando el servidor para el envio de cookies con state para la autenticacion-cookies y estado
+        //creando el metodo cache para el servidor
+        server.method('getLast', methods.getLast, {
+        //definiendo el cache en el server
+            cache: {
+                expiresIn: 1000*60,
+                generateTimeout: 2000 //la idea de este metodo es que cuando expire el tiempo se genera un error y buscar por fuera salir
+            }
+        })
+        //configurando el servidor para el envio de cookies con state para la autenticacion-cookies y estado
         server.state('user', { //nombre la cookie (user)
             ttl: 1000 * 60 * 60 * 24 * 7, //ttl de una semana
             isSecure: process.env.NODE_ENV === 'prod',

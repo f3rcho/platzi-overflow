@@ -8,7 +8,14 @@ module.exports = [
 
     {
         method: 'GET',
-        path: '/',
+        path: '/', 
+        options: {
+//definiendo el cache en memoria para el cliente, brower
+            cache: {
+                expiresIn: 1000*30,
+                privacy: 'private'
+            }
+        },
         handler: site.home
     },
     {
