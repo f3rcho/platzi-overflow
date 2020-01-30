@@ -5,10 +5,10 @@ const Hapi = require('@hapi/hapi')
 const handlerbars = require('./lib/helpers') // para implementacion de plantillas
 const inert = require('inert') // extiende los metodos disponible en el objeto h
 const methods = require('./lib/methods')
-const vision = require('@hapi/vision') //para implementar el uso de vistas. Hay que configurarlo por ser un plugin
-const site = require('./controllers/site')
 const path = require('path') // nos permite definir una ubicación relativa para todos los routes de nuestro proyecto
 const routes = require('./routes')
+const site = require('./controllers/site')
+const vision = require('@hapi/vision') //para implementar el uso de vistas. Hay que configurarlo por ser un plugin
 
 // Configurar el servidor de nuestra aplicación. En un contenedor (Docker) si marca error colocar 0.0.0.0 (todos)
 const server = Hapi.server({
@@ -32,7 +32,7 @@ async function init() {
         //registrando vision
         await server.register(vision)
         //registrando el metodo del servidor
-        server.methods('setAnswerRight', methods.setAnswerRight)
+        server.method('setAnswerRight', methods.setAnswerRight)
     //configurando el servidor para el envio de cookies con state para la autenticacion-cookies y estado
         server.state('user', { //nombre la cookie (user)
             ttl: 1000 * 60 * 60 * 24 * 7, //ttl de una semana

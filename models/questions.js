@@ -35,9 +35,9 @@ class Questions {
     //query al firebase
         const query = await this.collection.child(questionId).once('value')
         const question = query.val()
-        const answers = question.answer
+        const answers = question.answers
     //verificamos que el usuario es el dueno de la pregunta
-        if (user.email === question.owner.email) {
+        if (!user.email === question.owner.email) {
             return false            
         }
     //proceso para responder

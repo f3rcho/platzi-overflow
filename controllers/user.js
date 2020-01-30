@@ -6,6 +6,7 @@ async function createUser (req, h) {
     let result
     try {
         result = await users.create(req.payload)
+        console.log(`Usuario registrado ${result}`)
     } catch (error) {
         console.error(error)
         return h.view('register', {
@@ -56,11 +57,9 @@ function failValidation (req, h, error) {
         '/create-question': 'ask'
     }
     //retornamos la vista. req.path, accedo a la ruta de la que se esta mandando el error
-    console.error(error);
     return h.view(templates[req.path], {
         title: 'Error de validación',
         error: 'Favor complete los campos requeridos'
-        
     }).code(400).takeover()//finaliza el ciclo y responde de una vez 
 }
 module.exports = {
