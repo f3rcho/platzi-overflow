@@ -83,6 +83,7 @@ module.exports = [
                 payload: {
                     title: joi.string().required(),
                     description: joi.string().required(),
+                    image: joi.any().optional()
                 },
                 //manejando error. cuando la validacion falla
                 failAction: user.failValidation,

@@ -6,8 +6,18 @@ class Questions {
         this.ref = this.db.ref('/') //se crea una referencia
         this.collection = this.ref.child('questions') //referenciamos la raiz
     }
-    async create (data, user) {
-        data.owner = user //user esta en una cookie
+    async create (info, user, filename) {
+// introduciendo info en data para poder conservar data y modificando para recibir imagenes
+        const data = {
+            description: info.description,
+            title: info.title,
+            owner: user    
+        }
+//si llega filename lo guarda y queda referenciada en la db
+        if (filename) {
+            data.filename = filename
+        }
+
         const question = this.collection.push() //guarda en la colection
         question.set(data) //se inserta
 
