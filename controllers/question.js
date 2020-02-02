@@ -22,9 +22,10 @@ async function createQuestion (req, h) {
 
         }
         result = await questions.create(req.payload, req.state.user, filename)
-        console.log(`Pregunta creada con el ID ${result}`)
+//aplicando el servidor de good en los logs con req y res
+        req.log('info', `Pregunta creada con el ID ${result}`)
     } catch (error) {
-        console.error(`Ocurrio un error: ${error}`);
+        req.log('error', `Ocurrio un error: ${error}`);
         
         return h.view('ask', {
             title: 'Crear Pregunta',
