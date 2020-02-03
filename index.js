@@ -1,6 +1,7 @@
 'use strict'
 
 const Hapi = require('@hapi/hapi')
+const crumb = require('@hapi/crumb')
 const handlerbars = require('./lib/helpers') 
 const inert = require('inert') 
 const good = require('@hapi/good')
@@ -40,10 +41,27 @@ async function init() {
                 }
             }
         })
+//Registrando crumb
+        await server.register({
+            plugin: crumb,
+            options: {
+                cookieOptions: {
+                    isSecure: process.env.NODE_ENV === 'prod'
+                }
+            }
+        })
+    //Registrando el API 
+        await server.register({
+            plugin: require('./lib/api'),
+            options: {
+                prefix: 'api'
+            }
+        })
+
         server.method('setAnswerRight', methods.setAnswerRight)
         server.method('getLast', methods.getLast, {
             cache: {
-                expiresIn: 1000*60,
+                expiresIn: 1000 * 60,
                 generateTimeout: 2000 
             }
         })
@@ -66,7 +84,7 @@ async function init() {
         server.route(routes)
         await server.start()
     } catch (error) {
-        console.error(error)
+        server.log('error', error)
         process.exit(1)
     }
 //aplicando el servidor de good en los logs

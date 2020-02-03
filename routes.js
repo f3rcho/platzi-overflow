@@ -1,5 +1,6 @@
 'use strict'
-const joi = require('joi')
+
+const Joi = require('joi')
 const site = require('./controllers/site')
 const user = require('./controllers/user')
 const question = require('./controllers/question')
@@ -12,7 +13,7 @@ module.exports = [
         options: {
 //definiendo el cache en memoria para el cliente, brower
             cache: {
-                expiresIn: 1000*30,
+                expiresIn: 1000 * 30,
                 privacy: 'private'
             }
         },
@@ -28,11 +29,11 @@ module.exports = [
         method: 'POST',
         options: {
             validate: {
-                payload: {
-                    name: joi.string().required().min(3),
-                    email: joi.string().email().required(),
-                    password: joi.string().required().min(6),
-                },
+                payload: Joi.object({
+                    name: Joi.string().required().min(3),
+                    email: Joi.string().email().required(),
+                    password: Joi.string().required().min(6),
+                }),
                 failAction: user.failValidation,
             }
         },
@@ -65,12 +66,12 @@ module.exports = [
         method: 'POST',
         options: {
             validate: {
-                payload: {
-                    email: joi.string().email().required(),
-                    password: joi.string().required().min(6),
-                },
+                payload: Joi.object({
+                    email: Joi.string().email().required(),
+                    password: Joi.string().required().min(6),
+                }),
                 //manejando error. cuando la validacion falla
-                failAction: user.failValidation,
+                failAction: user.failValidation
             }
         },
         handler: user.validateUser
@@ -80,13 +81,13 @@ module.exports = [
         method: 'POST',
         options: {
             validate: {
-                payload: {
-                    title: joi.string().required(),
-                    description: joi.string().required(),
-                    image: joi.any().optional()
-                },
+                payload: Joi.object({
+                    title: Joi.string().required(),
+                    description: Joi.string().required(),
+                    image: Joi.any().optional()
+                }),
                 //manejando error. cuando la validacion falla
-                failAction: user.failValidation,
+                failAction: user.failValidation
             }
         },
         handler: question.createQuestion
@@ -96,10 +97,10 @@ module.exports = [
         method: 'POST',
         options: {
             validate: {
-                payload: {
-                    answer: joi.string().required(),
-                    id: joi.string().required()
-                },
+                payload: Joi.object({
+                    answer: Joi.string().required(),
+                    id: Joi.string().required()
+                }),
                 failAction: user.failValidation
             }
         },

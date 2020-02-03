@@ -57,7 +57,7 @@ function notFound (req, h) { //funcion que se lanzara al haber un 404
 //se verifica si el response viene con error y si viene con 404
 function fileNotFound (req, h) {
     const response = req.response
-    if (response.isBoom && response.output.statusCode === 404) {
+    if (req.path.startsWith('/api') && response.isBoom && response.output.statusCode === 404) {
         return h.view('404', {}, {layout: 'error-layout'}).code(404)
     }
 //si no se cumple la condicion se continua el lifecycle
@@ -79,5 +79,5 @@ module.exports = {
     fileNotFound: fileNotFound,
     notFound: notFound,
     register: register,
-    viewQuestion,
+    viewQuestion: viewQuestion
 }

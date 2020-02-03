@@ -44,9 +44,9 @@ async function answerQuestion (req, h) {
     let result
     try {
         result = await questions.answer(req.payload, req.state.user)
-        console.log(`Respuesta creada: ${result}`)
+        req.log(`Respuesta creada: ${result}`)
     } catch (error) {
-        console.error(error);
+        req.error(error);
     }
     return h.redirect(`/question/${req.payload.id}`) //redireccionando a la pregunta que se esta respondiendo
 }
@@ -58,14 +58,14 @@ async function setAnswerRight (req, h) {
     let result
     try {
         result = await req.server.methods.setAnswerRight(req.params.questionId, req.params.answerId, req.state.user)
-        console.log(result)
+        req.log(result)
     } catch (error) {
-        console.error(error);
+        req.error(error);
     }
     return h.redirect(`/question/${req.params.questionId}`) 
 }
 module.exports = {
     createQuestion: createQuestion,
-    answerQuestion,
-    setAnswerRight:setAnswerRight
+    answerQuestion: answerQuestion,
+    setAnswerRight: setAnswerRight
 }

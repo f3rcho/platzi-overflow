@@ -23,6 +23,7 @@ class Questions {
 
         return question.key //firebase retorna un key por eso devolvemos asi
     }
+
     async getLast (amount) {
         const query = await this.collection.limitToLast(amount).once('value')
         const data = query.val()
@@ -37,7 +38,7 @@ class Questions {
 // respondiendo, insertando una pregunta
     async answer (data, user) { //data objeto del payload
         const answers = await this.collection.child(data.id).child('answers').push()
-        answers.set({text: data.answer, user: user}) //dandole valores a answer
+        answers.set({ text: data.answer, user: user }) //dandole valores a answer
         return answers
     }
 // Creacion de l metodo estandar para el servidor
