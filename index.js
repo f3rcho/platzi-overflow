@@ -1,6 +1,7 @@
 'use strict'
 
 const Hapi = require('@hapi/hapi')
+const blankie = require('blankie')
 const crumb = require('@hapi/crumb')
 const handlerbars = require('./lib/helpers') 
 const inert = require('inert') 
@@ -8,6 +9,7 @@ const good = require('@hapi/good')
 const methods = require('./lib/methods')
 const path = require('path') 
 const routes = require('./routes')
+const scooter = require('@hapi/scooter')
 const site = require('./controllers/site')
 const vision = require('@hapi/vision')
 
@@ -50,6 +52,17 @@ async function init() {
                 }
             }
         })
+    //Registrando blankie
+    await server.register([scooter,{
+        plugin: blankie,
+        options: {
+            defaultSrc: `'self' 'unsafe-inline' `,
+            styleSrc: `'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com`,
+            fontSrc: `'self' 'unsafe-inline' data:`,
+            scriptSrc: `'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://maxcdn.bootstrapcdn.com/ https://code.jquery.com/`,
+        generateNonces: false
+        }
+    }])
     //Registrando el API 
         await server.register({
             plugin: require('./lib/api'),
